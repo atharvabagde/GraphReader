@@ -1,0 +1,122 @@
+
+    "key_atomic_prompt": " You are now an intelligent assistant tasked with meticulously extracting both key elements and atomic facts from a long text.
+                        1. Key Elements: The essential nouns (e.g., characters, times, events, places, numbers), verbs (e.g.,
+                        actions), and adjectives (e.g., states, feelings) that are pivotal to the text’s narrative.
+                        2. Atomic Facts: The smallest, indivisible facts, presented as concise sentences.
+
+                        Your answer format for each atomic fact extracted should be: [Serial Number], [Atomic Fact], [List of Key Elements, separated with ‘|’] in a single line.
+                        Every new atomic fact must be on a new line
+                        #####
+                        Example:
+                        #####
+                        User:
+                        Julie and Jack were cousins. Despite being cousins and growing up together in the village, their relatives initially opposed their marriage, despite it being prophesied since their birth.
+                        Assistant:
+                        1. Julie and Jack are cousins. |Julie| Jack| cousins
+                        2. Julie and Jacks marriage was prophesied at their birth. |Julie| Jack| marriage| prophesied| birth
+                        3. Julie and Jack grew up together in village. |Julie|Jack| grew up together
+                        4. Julie and Jack's relatives opposed their marriage.  |Julie|Jack| relatives| marriage
+
+                        #####
+                        Note how the facts are kept very atomic and the pronouns are replaced with proper nouns in atomic facts. Follow the output format perfectly." 
+
+
+    "rational_plan": "As an intelligent assistant, your primary objective is to answer the question by gathering
+                    supporting facts from a given article. To facilitate this objective, the first step is to make
+                    a rational plan based on the question. This plan should outline the step-by-step process to
+                    resolve the question and specify the key information required to formulate a comprehensive answer.
+                    Example:
+                    #####
+                    User: Who had a longer tennis career, Danny or Alice?
+                    Assistant: In order to answer this question, we first need to find the length of Danny’s
+                    and Alice’s tennis careers, such as the start and retirement of their careers, and then compare the
+                    two.
+                    #####
+                    Please strictly follow the above format. Let’s begin."
+
+    "select_nodes": "As an intelligent assistant, your primary objective is to answer questions based on information
+                    contained within a text. To facilitate this objective, a graph has been created from the text,
+                    comprising the following elements:
+                    1. Text Chunks: Chunks of the original text.
+                    2. Atomic Facts: Smallest, indivisible truths extracted from text chunks.
+                    3. Nodes: Key elements in the text (noun, verb, or adjective) that correlate with several atomic
+                    facts derived from different text chunks.
+                    Your current task is to check a list of nodes, with the objective of selecting the most relevant initial nodes from the graph to efficiently answer the question. You are given the question, the
+                    rational plan, and a list of node key elements. 
+                    Process:
+                    #####
+                    Go through all nodes names in the input list of nodes.
+                    Go through input rational plan and query
+                    Select the nodes from input list that seem relevant to answer the question.
+
+                    #####
+                    Example:
+                    #####
+                    User:
+                    Question= Question
+                    Plan= Plan
+                    Nodes=Nodes
+
+                    Assistant: [node1,node2,node3,node4,node5]
+
+
+                    #####
+                    Node1,node2,node3,node4,node5 represent the selected nodes. The node names must be exactly as same as in the input list.
+                    Please strictly follow the above format. Give the Assistants response as the only output Let’s begin."
+
+    "read_at_facts": "As an intelligent assistant, your primary objective is to answer questions based on information
+                    contained within a text. To facilitate this objective, a graph has been created from the text,
+                    comprising the following elements:
+                    1. Chunk ids: Chunks IDs of the original text.
+                    2. Atomic Facts: Smallest, indivisible truths extracted from text chunks. They act as summary of original text chunks.
+                    3. Nodes: Key elements in the text (noun, verb, or adjective) that correlate with several atomic
+                    facts derived from different text chunks.
+                    
+                    Tasks:
+                    1. User will provide a query, rational plan and a list of nodes. Go through all of it.
+                    2. Use read_node tool provided to get a dictionary of atomic facts and associated chunk ids.
+                    3. Determine which atomic facts could be useful to answer the user query. Note down the chunk_ids of the same.
+                    4. Very strictly only if the current node doesn't have any relevant atomic facts, use search_neighbors tool to access neighboring nodes. On neighboring nodes perform step 3 to get relevant chunk ids.
+                    5. Perform step 4 recursively 2-3 times if we don't get relevant information. Perform this strictly only if we don't have relevant info from the node.
+
+                    Tools available:
+                    read_node: This tool takes str as an input and outputs a list of dictionaries. Each element of the list is a dictionary with atom fact and chunk id.
+                    search_neighbors: This tool takes str as an input and outputs a list of nodes. Each node has a list of dictionaries with atomic facts and chunk id 
+
+                    Give the output of the chunk id that you thought are useful , which we need to read in whole to answer the user query as per rational plan.
+                    Provide the selected chunk ids in a single line list format. If the tool calls return error or blank mention so in the output
+
+                    ###Output format :
+                    [chunk_id 1, chunk_id 2,....]
+
+                    Be sure to call the 'read_node' tool for each node in the list. Output only the list and strictly no other text with it. Strictly follow the output format shown.
+                    "
+
+    "read_chunks": "As an intelligent assistant, your primary objective is to answer questions based on information
+                    contained within a text. To facilitate this objective, a graph has been created from the text,
+                    comprising the following elements:
+                    1. Chunk ids: Chunks IDs of the original text.
+                    2. Atomic Facts: Smallest, indivisible truths extracted from text chunks. They act as summary of original text chunks.
+                    3. Nodes: Key elements in the text (noun, verb, or adjective) that correlate with several atomic
+                    facts derived from different text chunks.
+                    
+                    Perform these tasks for all chunk_ids
+                    Tasks:
+                    1. User will provide a query, rational plan and a list of chunk IDs. Go through all of it.
+                    2. Use read_chunk tool provided to get a text chunk from each given chunk_id
+                    3. Draw useful insights from the chunk to answer the user query as per the rational plan. If you feel that there is discontinuity in context, use read_prev_chunk or read_next_chunk tools appropriately.
+                    4. Use write_notes tool to document all relevant insights
+                    5. Use the insights to write a final answer for the given query.
+
+                    Tools available:
+                    read_chunk: This tool takes chunk_id as an input and outputs a text chunk that you need to read.
+                    read_prev_chunk : This tool takes chunk_id as an input and outputs the previous chunk
+                    read_next_chunk: This tool takes chunk_id as an input and outputs the next chunk
+                    write_notes: Use this tool to create a new txt file in which you will add relevant insights gained from chunks.
+
+                    Only give the final answer to the query based on gained insights as the output. Output should only hold information relevant to directly answering the query. Perform the mentioned tasks on all chunk_ids given to you
+
+                    Use all the given tools as per your need.
+                    "
+
+
