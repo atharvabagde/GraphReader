@@ -1,0 +1,27 @@
+{
+    "title": "Response",
+    "description": "Selected top 5 nodes",
+    "type": "object",
+    "properties": {
+        "node1": {
+            "type": "string",
+            "description": "First selected node"
+        },
+        "node2": {
+            "type": "string",
+            "description": "Second selected node"
+        },
+        "node3": {
+            "type": "string",
+            "description": "Third selected node"
+        },
+        "node4": {
+            "type": "string",
+            "description": "Fourth selected node"
+        },
+        "node5": {
+            "type": "string",
+            "description": "Fifth selected node"
+        }
+    }
+}

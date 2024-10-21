@@ -1,0 +1,15 @@
+README.md
+setup.py
+graphreader/Text_encoder.py
+graphreader/__init__.py
+graphreader/document.py
+graphreader/graph_class.py
+graphreader/graph_reader.py
+graphreader/openai_client.py
+graphreader/pinecone_client.py
+graphreader/tools_utils.py
+graphreader.egg-info/PKG-INFO
+graphreader.egg-info/SOURCES.txt
+graphreader.egg-info/dependency_links.txt
+graphreader.egg-info/requires.txt
+graphreader.egg-info/top_level.txt

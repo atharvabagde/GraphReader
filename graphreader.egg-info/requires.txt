@@ -1,0 +1,9 @@
+langchain==0.3.4
+langchain-openai==0.2.3
+networkx==3.4.1
+nltk==3.9.1
+openai==1.52.0
+pinecone-client==5.0.1
+pypdf==5.0.1
+sentence-transformers==3.2.0
+tqdm==4.66.5
