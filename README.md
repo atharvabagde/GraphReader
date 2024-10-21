@@ -16,10 +16,10 @@ GraphReader employs Retrieval-Augmented Generation (RAG) techniques to break dow
   
 ### Installation
 
-1. Install the required dependencies:
+1. Install graphreader:
 
 ```bash
-pip install -r requirements.txt
+pip install graphreader
 ```
 
 ### Example Usage
@@ -27,6 +27,10 @@ pip install -r requirements.txt
 1. Initialize the document and graph:
 
 ```python
+from graphreader.document import Document
+from graphreader.graph_class import Graph
+from graphreader.graph_reader import GraphReader
+
 file_path = 'path/to/your/document.doc.pdf'
 doc = Document(file_path)
 chunk_dict = doc.get_chunks(st_ind=705)
